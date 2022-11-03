@@ -6,50 +6,53 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import projet1.Calculatrice;
 
 class CalculatriceTest {
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-		System.out.println("beforeAll 0");
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-		System.out.println("afterAll 2");
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-		System.out.println("beforeEach 3");
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-		System.out.println("afterEach 4");
-	}
-
+	
 	@Test
-	void test() {
-		System.out.println("test 1");
+	@DisplayName("test Add 1 + 2")
+	void testAdd1() {
+		Calculatrice calc = new Calculatrice();
+		assertEquals(3, calc.add(1, 2), "Test 1+2, valeur attendue: 3");
 	}
 	
 	@Test
-	void testAdd() {
+	@DisplayName("test Add Max")
+	void testAddMax() {
 		Calculatrice calc = new Calculatrice();
-		int resultat = calc.add(1, 2);
-		System.out.println("Resultat = "+resultat);
+		assertEquals(Integer.MAX_VALUE, calc.add(Integer.MAX_VALUE, 1), "Test MAX_VALUE + 1, en cas de valeur>max, valeur attendue: MAX_VALUE");
 	}
 	
 	@Test
-	void testRmv() {
+	@DisplayName("test Add Min")
+	void testAddMin() {
 		Calculatrice calc = new Calculatrice();
-		int resultat = calc.rmv(2, 1);
-		System.out.println("Resultat = "+resultat);
+		assertEquals(Integer.MIN_VALUE, calc.add(Integer.MIN_VALUE, -1), "Test MIN_VALUE + (-1), en cas de valeur<min, valeur attendue: MIN_VALUE");
 	}
-
-
+	
+	@Test
+	@DisplayName("test Add Zero")
+	void testAddZero() {
+		Calculatrice calc = new Calculatrice();
+		assertTrue(calc.add(-1, 1)>0, "Test du resultat = 0, valeur attendue: 1~100");
+		assertTrue(calc.add(-1, 1)<101, "Test du resultat = 0, valeur attendue 1~100");
+	}
+	
+	@Test
+	@DisplayName("Test parité")
+	void testPaire() {
+		Calculatrice calc = new Calculatrice();
+		assertTrue(calc.isPair(2), "Test de la parité de 2, valeur attendue: TRUE");
+	}
+	
+	@Test
+	@DisplayName("Test non parité")
+	void testNonPaire() {
+		Calculatrice calc = new Calculatrice();
+		assertFalse(calc.isPair(3), "Test de la parité de 3, valeur attendue: FALSE");
+	}
 }
